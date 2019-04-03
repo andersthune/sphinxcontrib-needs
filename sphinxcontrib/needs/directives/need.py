@@ -489,7 +489,7 @@ def construct_headline(need_data, app):
     title_spacer = " "
 
     # need title
-    node_type = nodes.inline(title_type, title_type, classes=["needs-type"])
+    node_type = nodes.strong(title_type, title_type, classes=["needs-type"])
     node_title = nodes.inline(title_headline, title_headline, classes=["needs-title"])
 
     nodes_id = nodes.inline(classes=["needs-id"])
@@ -548,8 +548,8 @@ def construct_meta(need_data, env):
         for tag in need_data['tags']:
             # node_tags.append(nodes.inline(tag, tag, classes=["needs-tag", str(tag)]))
             # node_tags.append(nodes.inline(' ', ' '))
-            tag_line.append(nodes.inline(tag, tag, classes=["needs-tag", str(tag)]))
-            tag_line.append(nodes.inline(' ', ' '))
+            tag_line.append(nodes.emphasis(tag, tag, classes=["needs-tag", str(tag)]))
+            tag_line.append(nodes.inline(" ", " "))
         node_meta.append(tag_line)
 
     # Links incoming
