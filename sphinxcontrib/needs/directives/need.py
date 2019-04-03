@@ -671,11 +671,11 @@ def html_depart(self, node):
     self.body.append('</div>')
 
 
-def latex_visit(self, node):
+def latex_visit_default(self, node):
     pass
 
 
-def latex_depart(self, node):
+def latex_depart_default(self, node):
     pass
 
 

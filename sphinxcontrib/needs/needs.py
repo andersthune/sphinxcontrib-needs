@@ -11,7 +11,7 @@ from docutils.parsers.rst import directives
 from pkg_resources import parse_version
 from sphinx.roles import XRefRole
 from sphinxcontrib.needs.directives.need import Need, NeedDirective, \
-    process_need_nodes, purge_needs, add_sections, html_visit, html_depart, latex_visit, latex_depart
+    process_need_nodes, purge_needs, add_sections, html_visit, html_depart, latex_visit_default, latex_depart_default
 from sphinxcontrib.needs.directives.needimport import Needimport, NeedimportDirective
 from sphinxcontrib.needs.directives.needtable import Needtable, NeedtableDirective, process_needtables
 from sphinxcontrib.needs.directives.needlist import Needlist, NeedlistDirective, process_needlist
@@ -173,20 +173,6 @@ def setup(app):
     # Prefix for need_part output in tables
     app.add_config_value('needs_part_prefix', u'\u2192\u00a0', 'html')
 
-    # Define nodes
-    app.add_node(Need, html=(html_visit, html_depart), latex=(latex_visit, latex_depart))
-    app.add_node(Needfilter, )
-    app.add_node(Needimport)
-    app.add_node(Needlist)
-    app.add_node(Needtable)
-    app.add_node(Needflow)
-    app.add_node(NeedPart, html=(visitor_dummy, visitor_dummy), latex=(visitor_dummy, visitor_dummy))
-
-    ########################################################################
-    # DIRECTIVES
-    ########################################################################
-
-    # Define directives
     # As values from conf.py are not available during setup phase, we have to import and read them by our own.
     # Otherwise this "app.config.needs_types" would always return the default values only.
     try:
@@ -218,6 +204,8 @@ def setup(app):
         title_optional = getattr(config, "needs_title_optional", app.config.needs_title_optional)
         title_from_content = getattr(config, "needs_title_from_content", app.config.needs_title_from_content)
         app.needs_functions = getattr(config, "needs_functions", [])
+        latex_visit = getattr(config, "needs_latex_visit", latex_visit_default)
+        latex_depart = getattr(config, "needs_latex_depart", latex_depart_default)
     except IOError:
         types = app.config.needs_types
     except Exception as e:
@@ -225,6 +213,20 @@ def setup(app):
             os.path.join(app.confdir, "conf.py"), e))
         types = app.config.needs_types
 
+    # Define nodes
+    app.add_node(Need, html=(html_visit, html_depart), latex=(latex_visit, latex_depart))
+    app.add_node(Needfilter, )
+    app.add_node(Needimport)
+    app.add_node(Needlist)
+    app.add_node(Needtable)
+    app.add_node(Needflow)
+    app.add_node(NeedPart, html=(visitor_dummy, visitor_dummy), latex=(visitor_dummy, visitor_dummy))
+
+    ########################################################################
+    # DIRECTIVES
+    ########################################################################
+
+    # Define directives
     # Update NeedDirective to use customized options
     NeedDirective.option_spec.update(extra_options)
     if title_optional or title_from_content:
