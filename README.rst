@@ -1,3 +1,9 @@
+**This is a fork containing modifications to the original package
+ enabling sorting on arbitrary alphanumerical attributes and improved
+ LaTeX visuals.**
+
+**Original README:**
+
 *Complete, rendered documentation*: http://sphinxcontrib-needs.readthedocs.io/en/latest/
 
 This package contains the needs Sphinx extension.
