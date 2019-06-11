@@ -1,6 +1,4 @@
-**This is a fork containing modifications to the original package
- enabling sorting on arbitrary alphanumerical attributes and improved
- LaTeX visuals.**
+**This is a fork containing modifications to the original package enabling sorting on arbitrary alphanumerical attributes and improved LaTeX visuals.**
 
 **Original README:**
 
